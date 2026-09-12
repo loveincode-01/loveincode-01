@@ -1,0 +1,1893 @@
+/* ========================================
+   VARIABLES
+======================================== */
+
+:root {
+
+    --ivory: #fbf8f1;
+
+    --paper: #fffdf8;
+
+    --cream: #f2eadb;
+
+    --gold: #b58a43;
+
+    --gold-light: #e5c88d;
+
+    --gold-dark: #79571e;
+
+    --ink: #2d2924;
+
+    --muted: #766f64;
+
+    --line: rgba(181, 138, 67, .25);
+
+    --shadow:
+        0 30px 80px rgba(76, 55, 22, .12);
+}
+
+
+/* ========================================
+   RESET
+======================================== */
+
+* {
+    box-sizing: border-box;
+}
+
+
+html {
+    scroll-behavior: smooth;
+}
+
+
+body {
+
+    margin: 0;
+
+    background: var(--ivory);
+
+    color: var(--ink);
+
+    font-family: "DM Sans", sans-serif;
+
+    overflow-x: hidden;
+}
+
+
+button,
+input {
+    font: inherit;
+}
+
+
+button {
+    cursor: pointer;
+}
+
+
+::selection {
+
+    background: var(--gold-light);
+
+    color: var(--ink);
+}
+
+
+
+/* ========================================
+   TEXTURE
+======================================== */
+
+.grain {
+
+    position: fixed;
+
+    inset: 0;
+
+    pointer-events: none;
+
+    z-index: 20;
+
+    opacity: .06;
+
+    background-image:
+
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.8'/%3E%3C/svg%3E");
+}
+
+
+/* Lumière de la souris */
+
+.cursor-glow {
+
+    position: fixed;
+
+    width: 280px;
+
+    height: 280px;
+
+    border-radius: 50%;
+
+    pointer-events: none;
+
+    z-index: 2;
+
+    transform: translate(-50%, -50%);
+
+    background:
+
+        radial-gradient(
+            circle,
+            rgba(229, 200, 141, .18),
+            transparent 65%
+        );
+}
+
+
+
+/* ========================================
+   PARTICULES
+======================================== */
+
+.gold-dust {
+
+    position: fixed;
+
+    inset: 0;
+
+    pointer-events: none;
+
+    z-index: 3;
+
+    background-image:
+
+        radial-gradient(
+            circle,
+            rgba(181,138,67,.75) 0 1px,
+            transparent 1.5px
+        ),
+
+        radial-gradient(
+            circle,
+            rgba(229,200,141,.6) 0 1px,
+            transparent 1.5px
+        );
+
+    background-size:
+        130px 170px,
+        210px 230px;
+
+    background-position:
+        20px 30px,
+        80px 110px;
+
+    opacity: .2;
+
+    animation:
+        drift 22s linear infinite;
+}
+
+
+
+/* ========================================
+   HERO
+======================================== */
+
+.hero {
+
+    min-height: 100svh;
+
+    position: relative;
+
+    overflow: hidden;
+
+    display: grid;
+
+    place-items: center;
+
+    background:
+
+        radial-gradient(
+            circle at 50% 45%,
+            rgba(255,255,255,.95),
+            rgba(250,245,234,.65) 42%,
+            rgba(239,229,211,.8) 100%
+        );
+}
+
+
+.hero::before {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,.55),
+            transparent 30%,
+            transparent 70%,
+            rgba(255,255,255,.5)
+        ),
+
+        radial-gradient(
+            circle at 50% 100%,
+            rgba(181,138,67,.12),
+            transparent 45%
+        );
+}
+
+
+.hero-content {
+
+    position: relative;
+
+    z-index: 5;
+
+    text-align: center;
+
+    padding: 80px 20px 120px;
+
+    max-width: 900px;
+}
+
+
+/* ========================================
+   EMBLEM
+======================================== */
+
+.emblem {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 18px;
+
+    color: var(--gold);
+
+    margin-bottom: 26px;
+}
+
+
+.emblem span {
+
+    width: 72px;
+
+    height: 1px;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            transparent,
+            var(--gold)
+        );
+}
+
+
+.emblem span:last-child {
+
+    background:
+
+        linear-gradient(
+            90deg,
+            var(--gold),
+            transparent
+        );
+}
+
+
+.emblem i {
+
+    font-style: normal;
+
+    font-size: 27px;
+
+    text-shadow:
+        0 0 25px rgba(181,138,67,.45);
+}
+
+
+
+/* ========================================
+   TYPOGRAPHIE
+======================================== */
+
+.eyebrow,
+.tiny-label {
+
+    letter-spacing: .22em;
+
+    text-transform: uppercase;
+
+    font-size: 10px;
+
+    color: var(--gold-dark);
+
+    font-weight: 600;
+}
+
+
+.hero h1,
+h2 {
+
+    font-family:
+        "Cormorant Garamond",
+        serif;
+
+    font-weight: 500;
+
+    letter-spacing: -.035em;
+
+    line-height: .85;
+}
+
+
+.hero h1 {
+
+    font-size:
+        clamp(74px, 11vw, 150px);
+
+    margin: 22px 0 28px;
+}
+
+
+em {
+
+    font-family:
+        "Great Vibes",
+        cursive;
+
+    font-weight: 400;
+
+    color: var(--gold);
+
+    letter-spacing: 0;
+}
+
+
+.hero-subtitle {
+
+    font-family:
+        "Cormorant Garamond",
+        serif;
+
+    font-size:
+        clamp(19px, 2.3vw, 27px);
+
+    line-height: 1.35;
+
+    color: var(--muted);
+
+    margin-bottom: 38px;
+}
+
+
+.hero-subtitle span {
+
+    color: var(--gold-dark);
+}
+
+
+
+/* ========================================
+   BOUTON
+======================================== */
+
+.gold-button,
+.seal-button {
+
+    border:
+
+        1px solid
+        rgba(181,138,67,.65);
+
+    background:
+
+        linear-gradient(
+            135deg,
+            #d5ad61,
+            #a9782c
+        );
+
+    color: white;
+
+    padding: 16px 28px;
+
+    border-radius: 999px;
+
+    box-shadow:
+
+        0 12px 35px
+        rgba(181,138,67,.25),
+
+        inset 0 1px
+        rgba(255,255,255,.35);
+
+    transition:
+
+        transform .3s,
+        box-shadow .3s;
+}
+
+
+.gold-button:hover,
+.seal-button:hover {
+
+    transform: translateY(-3px);
+
+    box-shadow:
+
+        0 18px 45px
+        rgba(181,138,67,.35),
+
+        inset 0 1px
+        rgba(255,255,255,.45);
+}
+
+
+.gold-button span {
+
+    margin-left: 9px;
+}
+
+
+
+/* ========================================
+   ENVELOPPE
+======================================== */
+
+.floating-envelope {
+
+    position: absolute;
+
+    right: 8%;
+
+    bottom: 11%;
+
+    z-index: 4;
+
+    transform: rotate(9deg);
+
+    animation:
+        float 6s ease-in-out infinite;
+
+    opacity: .9;
+}
+
+
+.envelope {
+
+    width: 270px;
+
+    height: 180px;
+
+    position: relative;
+
+    filter:
+        drop-shadow(
+            0 25px 30px
+            rgba(64,44,15,.16)
+        );
+}
+
+
+.envelope-back {
+
+    position: absolute;
+
+    inset: 0;
+
+    background: #fffdf7;
+
+    border:
+        1px solid
+        rgba(181,138,67,.25);
+}
+
+
+.envelope-back::before,
+.envelope-back::after {
+
+    content: "";
+
+    position: absolute;
+
+    bottom: 0;
+
+    width: 0;
+
+    height: 0;
+
+    border-style: solid;
+}
+
+
+.envelope-back::before {
+
+    left: 0;
+
+    border-width:
+        0 135px 90px 0;
+
+    border-color:
+        transparent
+        #efe4d0
+        transparent
+        transparent;
+}
+
+
+.envelope-back::after {
+
+    right: 0;
+
+    border-width:
+        90px 0 0 135px;
+
+    border-color:
+        transparent
+        transparent
+        transparent
+        #f5ecdd;
+}
+
+
+.envelope-flap {
+
+    position: absolute;
+
+    inset: 0 0 auto;
+
+    height: 105px;
+
+    background: #f8f1e4;
+
+    clip-path:
+        polygon(
+            0 0,
+            100% 0,
+            50% 100%
+        );
+
+    border-top:
+        1px solid
+        rgba(181,138,67,.25);
+}
+
+
+.envelope-paper {
+
+    position: absolute;
+
+    width: 160px;
+
+    height: 115px;
+
+    background: white;
+
+    left: 55px;
+
+    top: -22px;
+
+    box-shadow:
+        0 8px 15px
+        rgba(64,44,15,.09);
+}
+
+
+.wax-seal {
+
+    position: absolute;
+
+    left: 50%;
+
+    top: 55%;
+
+    transform:
+        translate(-50%, -50%);
+
+    width: 50px;
+
+    height: 50px;
+
+    border-radius: 50%;
+
+    display: grid;
+
+    place-items: center;
+
+    color: #fff7e8;
+
+    background:
+
+        radial-gradient(
+            circle at 35% 25%,
+            #e2bf78,
+            #9b6b23
+        );
+
+    border:
+        2px solid
+        #e8cb91;
+
+    box-shadow:
+        0 5px 15px
+        rgba(99,66,18,.22);
+}
+
+
+
+/* ========================================
+   SCROLL
+======================================== */
+
+.scroll-hint {
+
+    position: absolute;
+
+    bottom: 27px;
+
+    left: 50%;
+
+    transform:
+        translateX(-50%);
+
+    color: var(--muted);
+
+    display: grid;
+
+    justify-items: center;
+
+    gap: 7px;
+
+    font-size: 9px;
+
+    letter-spacing: .18em;
+
+    text-transform: uppercase;
+}
+
+
+.scroll-hint i {
+
+    color: var(--gold);
+
+    font-style: normal;
+
+    animation:
+        bob 1.8s infinite;
+}
+
+
+
+/* ========================================
+   ORBES
+======================================== */
+
+.hero-orb {
+
+    position: absolute;
+
+    border-radius: 50%;
+
+    filter: blur(2px);
+
+    opacity: .35;
+
+    border:
+        1px solid
+        rgba(181,138,67,.12);
+}
+
+
+.orb-one {
+
+    width: 500px;
+
+    height: 500px;
+
+    left: -220px;
+
+    top: 10%;
+}
+
+
+.orb-two {
+
+    width: 700px;
+
+    height: 700px;
+
+    right: -340px;
+
+    bottom: -250px;
+}
+
+
+
+/* ========================================
+   SECTIONS
+======================================== */
+
+.letter-section,
+.signature-section {
+
+    position: relative;
+
+    padding: 150px 7vw;
+
+    max-width: 1250px;
+
+    margin: auto;
+}
+
+
+.section-intro h2 {
+
+    font-size:
+        clamp(55px, 7vw, 90px);
+
+    margin:
+        14px 0 28px;
+}
+
+
+.section-intro p {
+
+    max-width: 600px;
+
+    color: var(--muted);
+
+    line-height: 1.8;
+}
+
+
+
+/* ========================================
+   LETTRE
+======================================== */
+
+.letter-card {
+
+    position: relative;
+
+    max-width: 900px;
+
+    margin: 75px auto 0;
+
+    padding:
+        clamp(38px, 7vw, 90px);
+
+    background:
+
+        radial-gradient(
+            circle at 10% 10%,
+            rgba(229,200,141,.12),
+            transparent 25%
+        ),
+
+        var(--paper);
+
+    box-shadow: var(--shadow);
+
+    border:
+        1px solid
+        rgba(181,138,67,.18);
+
+    transform: rotate(-.5deg);
+}
+
+
+.letter-card::after {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 14px;
+
+    border:
+        1px solid
+        rgba(181,138,67,.13);
+
+    pointer-events: none;
+}
+
+
+.letter-corner {
+
+    position: absolute;
+
+    color: var(--gold);
+
+    font-size: 20px;
+
+    z-index: 1;
+}
+
+
+.top-left {
+
+    top: 27px;
+
+    left: 32px;
+}
+
+
+.bottom-right {
+
+    bottom: 27px;
+
+    right: 32px;
+}
+
+
+.letter-header {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    border-bottom:
+        1px solid
+        var(--line);
+
+    padding-bottom: 17px;
+
+    color: var(--gold-dark);
+
+    font-size: 10px;
+
+    letter-spacing: .18em;
+
+    text-transform: uppercase;
+}
+
+
+.letter-body {
+
+    max-width: 650px;
+
+    margin:
+        45px auto 0;
+
+    font-family:
+        "Cormorant Garamond",
+        serif;
+
+    font-size: 21px;
+
+    line-height: 1.7;
+
+    color: #484137;
+}
+
+
+.letter-body .script {
+
+    font-family:
+        "Great Vibes",
+        cursive;
+
+    color: var(--gold-dark);
+
+    font-size: 42px;
+
+    margin-bottom: 25px;
+}
+
+
+.letter-body strong {
+
+    color: var(--gold-dark);
+
+    font-weight: 600;
+}
+
+
+.closing {
+
+    text-align: right;
+
+    margin-top: 45px;
+
+    color: var(--gold-dark);
+}
+
+
+.closing span {
+
+    font-size: 27px;
+}
+
+
+
+/* ========================================
+   PROMESSE
+======================================== */
+
+.promise-section {
+
+    position: relative;
+
+    padding:
+        170px 7vw;
+
+    overflow: hidden;
+
+    background:
+
+        radial-gradient(
+            circle at 50% 30%,
+            rgba(255,255,255,.9),
+            rgba(246,238,223,.55) 45%,
+            #f4ecde
+        );
+}
+
+
+.promise-halo {
+
+    position: absolute;
+
+    width: 700px;
+
+    height: 700px;
+
+    border-radius: 50%;
+
+    left: 50%;
+
+    top: 30%;
+
+    transform:
+        translate(-50%, -50%);
+
+    border:
+        1px solid
+        rgba(181,138,67,.12);
+
+    box-shadow:
+
+        0 0 0 80px
+        rgba(181,138,67,.025),
+
+        0 0 0 160px
+        rgba(181,138,67,.018);
+}
+
+
+.centered {
+
+    position: relative;
+
+    z-index: 2;
+
+    text-align: center;
+
+    display: grid;
+
+    justify-items: center;
+}
+
+
+.centered p {
+
+    margin-left: auto;
+
+    margin-right: auto;
+}
+
+
+.big-heart {
+
+    font-size: 54px;
+
+    color: var(--gold);
+
+    text-shadow:
+        0 0 30px
+        rgba(181,138,67,.35);
+
+    margin-top: 20px;
+}
+
+
+.promise-card {
+
+    position: relative;
+
+    z-index: 3;
+
+    max-width: 850px;
+
+    margin:
+        70px auto 0;
+
+    text-align: center;
+
+    background:
+        rgba(255,253,248,.72);
+
+    backdrop-filter: blur(10px);
+
+    border:
+        1px solid
+        rgba(181,138,67,.2);
+
+    padding:
+        70px
+        clamp(30px, 6vw, 80px);
+
+    box-shadow:
+        0 30px 100px
+        rgba(92,68,29,.1);
+}
+
+
+.promise-number {
+
+    font-family:
+        "Cormorant Garamond",
+        serif;
+
+    color: var(--gold);
+
+    font-size: 28px;
+}
+
+
+.promise-line {
+
+    width: 55px;
+
+    height: 1px;
+
+    background: var(--gold);
+
+    margin:
+        18px auto 30px;
+}
+
+
+.promise-quote {
+
+    font-family:
+        "Cormorant Garamond",
+        serif;
+
+    font-size:
+        clamp(26px, 4vw, 40px);
+
+    line-height: 1.2;
+
+    color: #4b4236;
+}
+
+
+.clause {
+
+    margin:
+        55px auto 0;
+
+    padding:
+        38px 20px;
+
+    border-top:
+        1px solid
+        var(--line);
+
+    border-bottom:
+        1px solid
+        var(--line);
+}
+
+
+.clause-label {
+
+    display: block;
+
+    color: var(--gold-dark);
+
+    text-transform: uppercase;
+
+    letter-spacing: .2em;
+
+    font-size: 9px;
+
+    margin-bottom: 18px;
+}
+
+
+.clause p {
+
+    color: var(--muted);
+
+    margin: 8px 0;
+}
+
+
+.clause strong {
+
+    display: block;
+
+    font-family:
+        "Cormorant Garamond",
+        serif;
+
+    color: var(--gold-dark);
+
+    font-size:
+        clamp(48px, 8vw, 76px);
+
+    font-weight: 600;
+
+    letter-spacing: -.03em;
+
+    margin: 14px 0;
+}
+
+
+.clause strong small {
+
+    font-family:
+        "DM Sans",
+        sans-serif;
+
+    font-size: 13px;
+
+    letter-spacing: .15em;
+}
+
+
+.clause .symbol {
+
+    color: var(--gold);
+}
+
+
+.clause .symbolic {
+
+    font-size: 11px;
+
+    max-width: 450px;
+
+    margin:
+        14px auto 0;
+}
+
+
+
+/* ========================================
+   SIGNATURES
+======================================== */
+
+.signature-section {
+
+    padding-top: 170px;
+
+    padding-bottom: 150px;
+}
+
+
+.names {
+
+    max-width: 850px;
+
+    margin:
+        55px auto 40px;
+
+    display: grid;
+
+    grid-template-columns:
+        1fr auto 1fr;
+
+    align-items: end;
+
+    gap: 25px;
+}
+
+
+.names label {
+
+    display: grid;
+
+    gap: 9px;
+}
+
+
+.names label span {
+
+    text-transform: uppercase;
+
+    letter-spacing: .17em;
+
+    font-size: 9px;
+
+    color: var(--gold-dark);
+}
+
+
+.names input {
+
+    width: 100%;
+
+    border: 0;
+
+    border-bottom:
+        1px solid
+        var(--line);
+
+    background: transparent;
+
+    outline: 0;
+
+    padding: 10px 0;
+
+    color: var(--ink);
+
+    font-family:
+        "Cormorant Garamond",
+        serif;
+
+    font-size: 25px;
+}
+
+
+.and {
+
+    color: var(--gold);
+
+    font-size: 25px;
+
+    padding-bottom: 9px;
+}
+
+
+
+/* ========================================
+   SIGNATURE BOX
+======================================== */
+
+.signature-grid {
+
+    max-width: 1000px;
+
+    margin: 0 auto;
+
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 25px;
+}
+
+
+.signature-box {
+
+    background: #fffdf8;
+
+    border:
+        1px solid
+        rgba(181,138,67,.18);
+
+    padding: 25px;
+
+    box-shadow:
+        0 20px 55px
+        rgba(77,55,23,.07);
+}
+
+
+.sig-head {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    font-family:
+        "Cormorant Garamond",
+        serif;
+
+    font-size: 20px;
+
+    color: #4b4236;
+}
+
+
+.sig-head b {
+
+    color: var(--gold-dark);
+
+    font-weight: 600;
+}
+
+
+.clear-sign {
+
+    border: 0;
+
+    background: transparent;
+
+    color: var(--muted);
+
+    font-size: 10px;
+
+    text-transform: uppercase;
+
+    letter-spacing: .12em;
+}
+
+
+canvas {
+
+    width: 100%;
+
+    height: auto;
+
+    display: block;
+
+    margin-top: 15px;
+
+    touch-action: none;
+
+    background:
+
+        linear-gradient(
+            180deg,
+            transparent 95%,
+            rgba(181,138,67,.05)
+        );
+}
+
+
+.sig-line {
+
+    border-bottom:
+        1px solid
+        var(--line);
+}
+
+
+
+/* ========================================
+   BOUTON SIGNER
+======================================== */
+
+.seal-button {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 11px;
+
+    margin:
+        60px auto 0;
+
+    font-size: 14px;
+}
+
+
+.seal-icon {
+
+    font-size: 21px;
+}
+
+
+.privacy-note {
+
+    text-align: center;
+
+    max-width: 650px;
+
+    margin:
+        20px auto 0;
+
+    color: #9b9489;
+
+    font-size: 9px;
+
+    line-height: 1.6;
+}
+
+
+
+/* ========================================
+   FIN
+======================================== */
+
+.final-section {
+
+    min-height: 75svh;
+
+    display: grid;
+
+    place-items: center;
+
+    text-align: center;
+
+    position: relative;
+
+    overflow: hidden;
+
+    background: #f1e7d6;
+}
+
+
+.final-light {
+
+    position: absolute;
+
+    width: 750px;
+
+    height: 750px;
+
+    border-radius: 50%;
+
+    background:
+
+        radial-gradient(
+            circle,
+            rgba(255,255,255,.8),
+            transparent 65%
+        );
+
+    animation:
+        breathe 7s ease-in-out infinite;
+}
+
+
+.final-content {
+
+    position: relative;
+
+    z-index: 2;
+}
+
+
+.final-heart {
+
+    font-size: 60px;
+
+    color: var(--gold);
+
+    animation:
+        heartbeat 2.8s infinite;
+}
+
+
+.final-content h2 {
+
+    font-size:
+        clamp(60px, 8vw, 105px);
+
+    margin: 20px 0;
+}
+
+
+.final-date {
+
+    color: var(--gold-dark);
+
+    letter-spacing: .16em;
+
+    text-transform: uppercase;
+
+    font-size: 9px;
+}
+
+
+.back-top {
+
+    margin-top: 35px;
+
+    border: 0;
+
+    background: transparent;
+
+    color: var(--muted);
+
+    font-size: 10px;
+
+    letter-spacing: .15em;
+
+    text-transform: uppercase;
+}
+
+
+
+/* ========================================
+   POPUP
+======================================== */
+
+.success-overlay {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 100;
+
+    display: grid;
+
+    place-items: center;
+
+    padding: 20px;
+
+    background:
+        rgba(53,39,18,.35);
+
+    backdrop-filter: blur(14px);
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    transition: opacity .5s;
+}
+
+
+.success-overlay.open {
+
+    opacity: 1;
+
+    pointer-events: auto;
+}
+
+
+.success-card {
+
+    position: relative;
+
+    max-width: 560px;
+
+    width: 100%;
+
+    padding:
+        65px 35px;
+
+    text-align: center;
+
+    background: #fffdf8;
+
+    border:
+        1px solid
+        rgba(181,138,67,.28);
+
+    box-shadow:
+        0 35px 100px
+        rgba(36,25,8,.25);
+
+    transform:
+        translateY(25px)
+        scale(.97);
+
+    transition:
+        transform .6s
+        cubic-bezier(.2,.8,.2,1);
+}
+
+
+.success-overlay.open .success-card {
+
+    transform:
+        translateY(0)
+        scale(1);
+}
+
+
+.success-heart {
+
+    font-size: 65px;
+
+    color: var(--gold);
+
+    animation:
+        heartbeat 2.5s infinite;
+}
+
+
+.success-card h2 {
+
+    font-size: 55px;
+
+    margin: 15px 0;
+}
+
+
+.success-card p:not(.tiny-label) {
+
+    color: var(--muted);
+
+    line-height: 1.7;
+
+    font-size: 13px;
+}
+
+
+.success-sparkle {
+
+    position: absolute;
+
+    top: 35px;
+
+    right: 45px;
+
+    color: var(--gold);
+}
+
+
+
+/* ========================================
+   APPARITION
+======================================== */
+
+.reveal {
+
+    opacity: 0;
+
+    transform:
+        translateY(28px);
+
+    transition:
+
+        opacity 1s ease,
+
+        transform 1s
+        cubic-bezier(.2,.8,.2,1);
+}
+
+
+.reveal.visible {
+
+    opacity: 1;
+
+    transform:
+        translateY(0);
+}
+
+
+
+/* ========================================
+   ANIMATIONS
+======================================== */
+
+@keyframes float {
+
+    0%, 100% {
+
+        transform:
+            rotate(9deg)
+            translateY(0);
+    }
+
+    50% {
+
+        transform:
+            rotate(6deg)
+            translateY(-18px);
+    }
+}
+
+
+@keyframes bob {
+
+    50% {
+
+        transform:
+            translateY(6px);
+    }
+}
+
+
+@keyframes breathe {
+
+    50% {
+
+        transform:
+            scale(1.08);
+
+        opacity: .7;
+    }
+}
+
+
+@keyframes heartbeat {
+
+    0%, 100% {
+
+        transform:
+            scale(1);
+    }
+
+    10% {
+
+        transform:
+            scale(1.08);
+    }
+
+    20% {
+
+        transform:
+            scale(1);
+    }
+}
+
+
+@keyframes drift {
+
+    to {
+
+        background-position:
+            160px 210px,
+            20px 0;
+    }
+}
+
+
+
+/* ========================================
+   TABLETTE
+======================================== */
+
+@media (max-width: 850px) {
+
+    .floating-envelope {
+
+        right: -60px;
+
+        bottom: 12%;
+
+        transform:
+            scale(.72)
+            rotate(9deg);
+
+        opacity: .55;
+    }
+
+
+    .hero-content {
+
+        padding-top: 55px;
+    }
+
+
+    .letter-section,
+    .signature-section {
+
+        padding-left: 6vw;
+
+        padding-right: 6vw;
+    }
+
+
+    .signature-grid {
+
+        grid-template-columns: 1fr;
+    }
+
+
+    .names {
+
+        grid-template-columns: 1fr;
+
+        gap: 14px;
+    }
+
+
+    .and {
+
+        display: none;
+    }
+
+
+    .promise-section {
+
+        padding-left: 6vw;
+
+        padding-right: 6vw;
+    }
+}
+
+
+
+/* ========================================
+   MOBILE
+======================================== */
+
+@media (max-width: 520px) {
+
+    .hero h1 {
+
+        font-size: 68px;
+    }
+
+
+    .emblem span {
+
+        width: 40px;
+    }
+
+
+    .floating-envelope {
+
+        right: -85px;
+
+        bottom: 13%;
+    }
+
+
+    .letter-section,
+    .signature-section {
+
+        padding-top: 105px;
+
+        padding-bottom: 105px;
+    }
+
+
+    .letter-card {
+
+        margin-top: 45px;
+
+        padding:
+            42px 27px;
+    }
+
+
+    .letter-body {
+
+        font-size: 19px;
+    }
+
+
+    .promise-section {
+
+        padding-top: 115px;
+
+        padding-bottom: 115px;
+    }
+
+
+    .promise-card {
+
+        padding:
+            48px 23px;
+    }
+
+
+    .clause strong {
+
+        font-size: 46px;
+    }
+
+
+    .signature-box {
+
+        padding: 15px;
+    }
+
+
+    .success-card h2 {
+
+        font-size: 48px;
+    }
+
+
+    .cursor-glow {
+
+        display: none;
+    }
+}
